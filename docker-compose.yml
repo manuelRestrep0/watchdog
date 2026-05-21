@@ -1,0 +1,21 @@
+services:
+  watchdog:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - DB_PATH=/data/watchdog.db
+      - REDIS_ADDR=redis:6379
+    volumes:
+      - watchdog_data:/data
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  watchdog_data:
